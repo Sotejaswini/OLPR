@@ -485,6 +485,19 @@ class AdvancedLPR:
         cap.release()
         out.release()
         return output_path, all_detections
+def get_ocr_api_key():
+    # 1. Streamlit secrets (Cloud + local with .streamlit/secrets.toml)
+    if "ocr_space_api_key" in st.secrets:
+        return st.secrets["ocr_space_api_key"]
+
+    # 2. Environment variable (alternative / CI / docker)
+    if os.getenv("OCR_SPACE_API_KEY"):
+        return os.getenv("OCR_SPACE_API_KEY")
+
+    # 3. Last resort - development fallback (never commit this!)
+    # return "K89310424288999"   # ← DO NOT COMMIT THIS LINE
+
+    return ""  # No key available → OCR API will be disabled
 
 def main():
     st.title("🚗 Optimized License Plate Recognition System")
@@ -505,8 +518,14 @@ def main():
     st.sidebar.header("⚙️ System Configuration")
     st.session_state.yolo_path = st.sidebar.text_input("Yolo Model Path", st.session_state.yolo_path)
     st.session_state.lprnet_path = st.sidebar.text_input("LPRNet Model Path", st.session_state.lprnet_path)
-    st.session_state.ocr_api_key = st.sidebar.text_input("OCR.Space API Key", st.session_state.ocr_api_key, type="password")
+    #st.session_state.ocr_api_key = st.sidebar.text_input("OCR.Space API Key", st.session_state.ocr_api_key, type="password")
     st.session_state.results_dir = st.sidebar.text_input("Results Directory", st.session_state.results_dir)
+
+    
+
+# ────────────────────────────────────────────────────────────────
+# Try to get API key from secrets first
+# ────────────────────────────────────────────────────────────────
 
     if st.sidebar.button("🔄 Initialize Models"):
         with st.spinner("🔄 Initializing AI models..."):
