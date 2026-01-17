@@ -1,6 +1,6 @@
 import streamlit as st
-import cv2
 import numpy as np
+import cv2
 import torch
 import os
 import json
