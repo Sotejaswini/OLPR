@@ -2,11 +2,11 @@ streamlit==1.30.0
 
 # Computer Vision
 opencv-python-headless==4.8.1.78
-Pillow==10.1.0
+Pillow==9.5.0
 
-# Deep Learning
-torch==2.0.1
-torchvision==0.15.2
+# Deep Learning (CPU only, Python 3.11 compatible)
+torch==2.1.2
+torchvision==0.16.2
 ultralytics==8.0.196
 easyocr==1.7.1
 
